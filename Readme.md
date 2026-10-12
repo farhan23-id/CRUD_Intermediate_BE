@@ -3,7 +3,8 @@
 ## Note
 
 ```
-On this repo, I only create a basic CRUD without role and rate limiting, but you can follow this guide if you want to build those features.
+On this repo, I only create a basic CRUD without role and rate limiting,
+but you can follow this guide if you want to build those features.
 ```
 
 A backend-only REST API built with **Express 5**, **Knex** and **MySQL**. It implements user CRUD with **JWT authentication**, **role-based access control**, input validation, pagination/search and basic security hardening. There is no frontend; the API is meant to be tested with Postman.
@@ -27,7 +28,7 @@ A backend-only REST API built with **Express 5**, **Knex** and **MySQL**. It imp
 | HTTP server                      | `express`                      |
 | Database                         | MySQL via `mysql2`             |
 | Query builder, migrations, seeds | `knex`                         |
-| Password hashing                 | `bcryptjs`                     |
+| Password hashing                 | `bcrypt`                       |
 | Authentication                   | `jsonwebtoken`                 |
 | Environment variables            | `dotenv`                       |
 | CORS                             | `cors`                         |
@@ -205,7 +206,7 @@ All user routes require a valid token.
 | ------ | ---------------- | -------------- | ------------------------------------------- |
 | GET    | `/api/users`     | Admin          | List users (supports pagination and search) |
 | GET    | `/api/users/:id` | Owner or admin | Get one user                                |
-| PUT    | `/api/users/:id` | Owner or admin | Update a user                               |
+| PATCH  | `/api/users/:id` | Owner or admin | Update a user                               |
 | DELETE | `/api/users/:id` | Owner or admin | Delete a user                               |
 
 ### Request and response examples
@@ -289,7 +290,7 @@ Response `200`:
 **Update a user**
 
 ```
-PUT /api/users/1
+PATCH /api/users/1
 ```
 
 ```json
@@ -344,7 +345,7 @@ These are for development only. Never use them in production.
 2. Register a new user (`201`); repeat with the same email (`409`).
 3. Log in and copy the token; use a wrong password (`401`).
 4. `GET /api/users` without a token (`401`), with a normal user's token (`403`), with an admin token (`200`).
-5. `PUT` / `DELETE` your own id (success) and another user's id as a normal user (`403`).
+5. `PATCH` / `DELETE` your own id (success) and another user's id as a normal user (`403`).
 6. `GET /api/users/9999` returns `404`.
 7. Send invalid input to register or update and confirm `400` with error details.
 

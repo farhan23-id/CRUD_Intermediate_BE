@@ -13,7 +13,7 @@ router.use(authenticate);
 
 router.get("/", userController.getUsers);
 router.get("/:id", userController.getUserById);
-router.put(
+router.patch(
   "/:id",
   authorizeSelf,
   validate(updateUserSchema),
